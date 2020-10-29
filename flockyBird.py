@@ -46,12 +46,12 @@ class Bird:
         for pipe in pipes:
             if self.rect.colliderect(pipe.pipe_top) or self.rect.colliderect(pipe.pipe_bottom):
                 self.death_sound.play()
-                return False
+                return True
 
         if self.rect.top <= -100 or self.rect.bottom >= 900:
-            return False
+            return True
 
-        return True
+        return False
 
     def flap(self):
         self.flap_sound.play()
@@ -196,7 +196,7 @@ while True:
                 bird.movement += Game.fall_speed
                 bird.rect.centery += int(bird.movement)
                 screen.blit(bird.rotate(), bird.rect)
-                bird.active = bird.check_collision(Pipe.pipe_list)
+                bird.active = not bird.check_collision(Pipe.pipe_list)
 
         for pipe in Pipe.pipe_list:
             for bird in Game.flock:
